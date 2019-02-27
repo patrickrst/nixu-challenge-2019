@@ -1,0 +1,192 @@
+commit da38267d15c7f1983cbb34be0dd93e5e0a8b6c3d
+Author: admin <admin@example.com>
+Date:   Mon Nov 26 13:13:13 2018 +0200
+
+    Wrap inside NIXU{}
+
+commit 983db0dd8771fcfb236beb8273c014171ffb3cef
+Author: admin <admin@example.com>
+Date:   Tue Feb 2 13:13:13 2016 +0200
+
+    Decode phonetic alphabet (lowercase, no whitespace)
+
+commit aac24d1098a45c0a0f121ff63ab3a4d9df2fae32
+Author: admin <admin@example.com>
+Date:   Tue Feb 2 10:13:13 2016 +0200
+
+    Translate from Swahili to English
+
+commit 106f871498aa0423c7c747ebac4f8ec5bd7bb482
+Author: admin <admin@example.com>
+Date:   Mon Feb 1 19:13:13 2016 +0200
+
+    Encrypt with rot13
+
+commit 02534037baaa36daaf77fb3a3a40a57813d5c99e
+Author: admin <admin@example.com>
+Date:   Mon Feb 1 09:13:13 2016 +0200
+
+    Encode as raw bytes to save even more space
+
+commit 3787285b37ef9c156116bc64943243779b45d09a
+Author: admin <admin@example.com>
+Date:   Thu Oct 1 09:13:13 2015 +0300
+
+    Encode the number as hex to save space
+
+commit 8b7ea16b59319c1ff33ed9848364580657860081
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 1ecf0ed731df5611f763ecbd95b6d040a2d0a96b
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 484157c11918569278e496fda7e201d57d3bc6d6
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 1f9e276648617c139c86826bca046d2d58bf3da7
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 757ebe8bdb4029613c3f04747a8e8bf2f7aa43fc
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 47404fe04810785280b2de0c9d3f11884a65a735
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit c5e6056221284b2c5e5c6128e7063da816a5c504
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 79bf22e4098fa7c2e3b0ac3a0e31aa8f48fe5cbb
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 6e0479b711ffcccfce6f291d5e6f27a25d5617db
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 10b399705f396fcca0f87d3abc083947be5cdf53
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 26a8029d53a4c82b20e558b5a6b53d473c5acd74
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit a69bac100fcae58985ecc6d161e5a92eed82d110
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 8e8ce710cd519f9bcdc1e4ee81310a37c9674b36
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 9986487648fd8d3cfd94235ae7454c8179fcc0f2
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 701342354a2566948f91a1e4435e702d8de0e9b8
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 3fc085a8e6db34df56485b09fadfec26f216c068
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Repeat
+
+commit 8fee3b142a9b4e596d9c2dbbf090cc1b1c3ffe13
+Author: admin <admin@example.com>
+Date:   Tue Nov 6 09:13:13 2012 +0200
+
+    Upgrade to a virtual 1d10000000 dice (with a hardware random number generator)
+
+commit 1b7d094b5b1e8d0de5e44305d531fc8563956cfd
+Author: admin <admin@example.com>
+Date:   Tue Jun 1 12:13:13 2004 +0300
+
+    Repeat
+
+commit c343098a444c337e05c220136400c02b011e5167
+Author: admin <admin@example.com>
+Date:   Tue Jun 1 12:13:13 2004 +0300
+
+    Repeat
+
+commit 1e7415918473a562a6a9628625f4bd8f0c27e5d8
+Author: admin <admin@example.com>
+Date:   Tue Jun 1 12:13:13 2004 +0300
+
+    Repeat
+
+commit 4d028d80fdb5ff431f223dddde8553118e4e6c92
+Author: admin <admin@example.com>
+Date:   Tue Jun 1 12:13:13 2004 +0300
+
+    Upgrade to a 1d100 dice
+
+commit 3b725ced47645c0fb10768875f28fdd799cedf00
+Author: admin <admin@example.com>
+Date:   Mon Jan 1 10:13:13 2001 +0200
+
+    Repeat
+
+commit 67779fe522e1474df1e17fe6949a01f1e7d3a334
+Author: admin <admin@example.com>
+Date:   Mon Jan 1 10:13:13 2001 +0200
+
+    Repeat
+
+commit 6947e4006a49f143335283e54de4ea389e95c650
+Author: admin <admin@example.com>
+Date:   Mon Jan 1 10:13:13 2001 +0200
+
+    Repeat
+
+commit 5ad2edefc55627010c4087311552a7cbafc0d65c
+Author: admin <admin@example.com>
+Date:   Mon Jan 1 10:13:13 2001 +0200
+
+    Roll a 1d9 dice and append the result to flag.txt
+
+commit 947322239b13ea1e7705981f41f4b40980788e2b
+Author: admin <admin@example.com>
+Date:   Mon Jan 1 10:13:13 2001 +0200
+
+    Add an empty flag.txt
+
