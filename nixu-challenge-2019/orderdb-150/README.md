@@ -13,14 +13,22 @@
 
 ## Write-up
 
-Cookie
+The website in question is protected by a login page. After trying with credentials admin/admin, we can see that a cookie `sess` is created with a Base64 encoded value.
+
+```
 dXNlcm5hbWU9YWRtaW46OmxvZ2dlZF9pbj1mYWxzZQ==
-
-Base64 Decode
 username=admin::logged_in=false
+```
 
-Change to true
+We change the value of `logged_in` to `true`, encode it and update the cookie. We are now logged in.
+
+```
+username=admin::logged_in=true
 dXNlcm5hbWU9YWRtaW46OmxvZ2dlZF9pbj10cnVl
+```
 
-Comment in source
+In the source code of the webpage, we can see a reference to LDAP, which hints us at a LDAP injection.
+
+```html
 <!-- Get documents from ldap! -->
+```

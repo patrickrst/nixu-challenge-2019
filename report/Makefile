@@ -7,16 +7,19 @@ FILES = 01_introduction.md \
 OUTPUT = build
 
 FLAGS = -s \
-		-f markdown \
-		--template=template.latex
+		--pdf-engine=pdflatex \
+		--from markdown-raw_tex \
+		--template template.latex \
+		--listings
+
 
 all: chals pdf
 
 chals:
-	find ./../nixu-challenge-2019/ -type f -name 'README.md' -print0 | sort -z | xargs -r0 -I{} sed -e '2,/## Write-up/d' {} | pandoc -s -f markdown -o challenges_generated.md
+	find ./../nixu-challenge-2019/ -type f -name 'README.md' -print0 | sort -z | xargs -r0 -I{} sed -e '2,/## Write-up/d' {} | pandoc -s -f markdown-raw_tex -o challenges_generated.md
 
 pdf:
 	pandoc $(FLAGS) $(FILES) -o $(OUTPUT)/report.pdf
 
 clean:
-	rm build/*
+	rm $(OUTPUT)/*

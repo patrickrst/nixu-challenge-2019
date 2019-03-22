@@ -15,17 +15,19 @@
 
 Based on the name of the challenge it seemed obvious that we should look into the port numbers. Using Wireshark we exported the port numbers from the pcap file into plain text.
 
+```bash
 tshark -r ports.pcap -T fields -e tcp.dstport > ports.txt
+```
 
 We then tried to translate the decimal numbers to ASCII. The result looked like a typical base64 string, a good sign that we're on the right track.
 
-Decimal to ASCII
+```
 QVZLSHtmbHpvYnlmX25hcV9haHpvcmVmX25lcl9zaGFfZ2JfY3lubF9qdmd1fQ==
+```
 
 The formating of the decoded base64 string assured us that we're almost done. Using ROT13, a version of the classic Caesar cipher, we recovered the key.
 
-Base64 Decode
+```
 AVKH{flzobyf_naq_ahzoref_ner_sha_gb_cynl_jvgu}
-
-ROT13
 NIXU{symbols_and_numbers_are_fun_to_play_with}
+```

