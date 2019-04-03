@@ -18,5 +18,20 @@
 
 ## Write-up
 
-blabla
+In this part, the goal is to recover the user password from the system. We started with the `hashdump` command.
 
+```
+volatility -f mem.dmp --profile=Win7SP1x64 hashdump
+```
+
+We get a list of the users and the NTLM hash of their password. We tried to reverse find the hash on a few online websites, but with no success. So, we try this second command `lsadump`, which extracts secret keys from the registry, such as the default password for Windows.
+
+```
+volatility -f mem.dmp --profile=Win7SP1x64 lsadump
+```
+
+Indeed, in the default password key we can find the challenge flag.
+
+```
+NIXU{was_it_even_hard_for_you?}
+```
