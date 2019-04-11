@@ -14,5 +14,3 @@
 
 ## Write-up
 
-blabla
-

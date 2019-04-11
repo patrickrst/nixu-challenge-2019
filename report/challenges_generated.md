@@ -1,12 +1,8 @@
 AIMLES - staging
 ----------------
 
-blabla
-
 L'aritmetico, Il geometrico, Il finito
 --------------------------------------
-
-blabla
 
 Bad memories - part 1
 ---------------------
@@ -38,25 +34,18 @@ To do that, we can use `strings` to find text in the heap memory.
 
     strings -e l vads/notepad.exe.8c45060.0x0000000000390000-0x000000000048ffff.dmp 
 
-After looking throught a few files, we can find the flag in ROT13.
-
-    AVKH{guvf_j4f_gu3_rnfl_bar}
-    NIXU{this_w4s_th3_easy_one}
+After looking throught a few files, we can find the flag in ROT13
+`AVKH{guvf_j4f_gu3_rnfl_bar}`, which results in a valid flag
+`NIXU{this_w4s_th3_easy_one}`.
 
 Bad memories - part 2
 ---------------------
 
-blabla
-
 Bad memories - part 3
 ---------------------
 
-blabla
-
 Bad memories - part 4
 ---------------------
-
-blabla
 
 Bad memories - part 5
 ---------------------
@@ -73,34 +62,23 @@ from the registry, such as the default password for Windows.
 
     volatility -f mem.dmp --profile=Win7SP1x64 lsadump
 
-Indeed, in the default password key we can find the challenge flag.
-
-    NIXU{was_it_even_hard_for_you?}
+Indeed, in the default password key we can find the challenge flag
+`NIXU{was_it_even_hard_for_you?}`.
 
 Exfiltration
 ------------
 
-blabla
-
 fridge 2.0
 ----------
-
-blabla
 
 lisby-1
 -------
 
-blabla
-
 lisby-2
 -------
 
-blabla
-
 lisby-3
 -------
-
-blabla
 
 ACME Order DB
 -------------
@@ -165,12 +143,8 @@ python -c 'print("2\n" + "name\n" + "A"*128+"1234567\x81\n" + "3\n1\n" + "name\n
 Pad Practice
 ------------
 
-blabla
-
 Plumbing
 --------
-
-blabla
 
 Ports
 -----
@@ -198,5 +172,3 @@ the key.
 
 Stowaway
 --------
-
-blabla

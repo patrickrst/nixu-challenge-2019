@@ -30,8 +30,5 @@ We get a list of the users and the NTLM hash of their password. We tried to reve
 volatility -f mem.dmp --profile=Win7SP1x64 lsadump
 ```
 
-Indeed, in the default password key we can find the challenge flag.
+Indeed, in the default password key we can find the challenge flag `NIXU{was_it_even_hard_for_you?}`.
 
-```
-NIXU{was_it_even_hard_for_you?}
-```

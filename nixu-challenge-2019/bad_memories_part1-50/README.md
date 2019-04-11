@@ -47,9 +47,5 @@ To do that, we can use `strings` to find text in the heap memory.
 strings -e l vads/notepad.exe.8c45060.0x0000000000390000-0x000000000048ffff.dmp 
 ```
 
-After looking throught a few files, we can find the flag in ROT13.
+After looking throught a few files, we can find the flag in ROT13 `AVKH{guvf_j4f_gu3_rnfl_bar}`, which results in a valid flag `NIXU{this_w4s_th3_easy_one}`.
 
-```
-AVKH{guvf_j4f_gu3_rnfl_bar}
-NIXU{this_w4s_th3_easy_one}
-```
