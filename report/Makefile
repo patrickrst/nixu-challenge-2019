@@ -2,6 +2,7 @@ FILES = 01_introduction.md \
 		02_challenges.md \
 		challenges_generated.md \
 		03_conclusion.md \
+		04_references.md \
 		metadata.yaml
 
 OUTPUT = build
@@ -10,8 +11,9 @@ FLAGS = -s \
 		--pdf-engine=pdflatex \
 		--from markdown-raw_tex \
 		--template template.latex \
-		--listings
-
+		--listings \
+		--bibliography=bibliography.bib \
+		--csl=bibliography.csl
 
 all: chals pdf
 
