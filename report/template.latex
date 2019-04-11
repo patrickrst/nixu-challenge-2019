@@ -4,7 +4,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage{eurosym}
 
-\usepackage{hyperref}
+\usepackage[pdftex,
+        $if(title)$pdftitle={$title$},$endif$
+        $if(author)$pdfauthor={$for(author)$$author.name$$sep$, $endfor$},$endif$
+    ]{hyperref}
 
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
