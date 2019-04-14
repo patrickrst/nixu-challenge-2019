@@ -85,6 +85,30 @@ Indeed, in the default password key we can find the challenge flag
 Exfiltration
 ------------
 
+This challenge offers a network capture containing mostly SSL and DNS
+traffic. From the hint in the description (using internet would be
+annoying if this protocol did not exist), we can assume it is about DNS
+(would be annoying to use an IP address instead of a domain name).
+Looking at the DNS packets, we can see a lot of legitimate traffic, but
+also many TXT, MX and CNAME queries to a domain name ending with
+`malicious.pw`. We can filter those queries using this expression
+`dns && dns.qry.name contains "malicious.pw"` in Wireshark.
+
+From there, we can assume that the data in encoded in the numbers in the
+domain name. Looking up on the web, we can find a DNS tunnel named
+dnscat2 that seems to be the one in use. We export the DNS queries from
+Wireshark to a text file, keep only the domain name and strip the
+`malicious.pw` ending. By converting the series of number to ASCII, we
+can find a session in a UNIX shell and a file named `flag.png`, which
+seems to have also been transfered in the same DNS tunnel session.
+Indeed, we can also find the header of a PNG file, starting with
+`89 50 4E 47`. Using a Python script and the library `dpkt`, we parse
+the network capture and keep only the data from the DNS queries that
+contains `PNG` to the end of the image, the packet containing `IEND`. We
+also need to strip a few bytes that are used by the dnscat2 protocol.
+Writing the image bytes to a file results in a valid PNG (after a few
+tries) which contains the flag `NIXU{just_another_tunneling_technique}`.
+
 fridge 2.0
 ----------
 
@@ -102,23 +126,15 @@ ACME Order DB
 
 The website in question is protected by a login page. After trying with
 credentials admin/admin, we can see that a cookie `sess` is created with
-a Base64 encoded value.
+a Base64 encoded value that corresponds to
+`username=admin::logged_in=false`. We change the value of `logged_in` to
+`true`, encode it and update the cookie. We are now logged in.
 
-    dXNlcm5hbWU9YWRtaW46OmxvZ2dlZF9pbj1mYWxzZQ==
-    username=admin::logged_in=false
-
-We change the value of `logged_in` to `true`, encode it and update the
-cookie. We are now logged in.
-
-    username=admin::logged_in=true
-    dXNlcm5hbWU9YWRtaW46OmxvZ2dlZF9pbj10cnVl
-
-In the source code of the webpage, we can see a reference to LDAP, which
-hints us at a LDAP injection.
-
-``` {.html}
-<!-- Get documents from ldap! -->
-```
+In the source code of the webpage, we can see a reference to LDAP
+(`<!-- Get documents from ldap! -->`), which hints us at a LDAP
+injection. Using the following query `*))(|(a=*`, we are able to have
+access to secret files which one contains the flag
+`NIXU{c00kies_with_ldap_for_p0r1ft}`.
 
 Device Control Pwnel
 --------------------

@@ -13,22 +13,10 @@
 
 ## Write-up
 
-The website in question is protected by a login page. After trying with credentials admin/admin, we can see that a cookie `sess` is created with a Base64 encoded value.
-
-```
-dXNlcm5hbWU9YWRtaW46OmxvZ2dlZF9pbj1mYWxzZQ==
-username=admin::logged_in=false
-```
-
+The website in question is protected by a login page.
+After trying with credentials admin/admin, we can see that a cookie `sess` is created with a Base64 encoded value that corresponds to `username=admin::logged_in=false`.
 We change the value of `logged_in` to `true`, encode it and update the cookie. We are now logged in.
 
-```
-username=admin::logged_in=true
-dXNlcm5hbWU9YWRtaW46OmxvZ2dlZF9pbj10cnVl
-```
+In the source code of the webpage, we can see a reference to LDAP (`<!-- Get documents from ldap! -->`), which hints us at a LDAP injection.
+Using the following query `*))(|(a=*`, we are able to have access to secret files which one contains the flag `NIXU{c00kies_with_ldap_for_p0r1ft}`.
 
-In the source code of the webpage, we can see a reference to LDAP, which hints us at a LDAP injection.
-
-```html
-<!-- Get documents from ldap! -->
-```
