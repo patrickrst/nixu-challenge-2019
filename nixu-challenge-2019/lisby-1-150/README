@@ -1,0 +1,159 @@
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ L I S B Y   D E V I C E :   A N   A R C H I T E C T U R E   G U I D E
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+A conforming LISBY DEVICE must adhere to the following constraints:
+* All values are little-endian (LE)
+* All integers are two's complement and 64-bit in width
+* All floats are IEEE 754 binary64
+
+Each LISBY DEVICE program consists of three specific sections:
+1. String table
+2. Symbol table
+3. Tapes describing the TOP LEVEL code and lambdas
+	* tape 0 is the TOP LEVEL code where execution begins
+	* tapes 1..N are lambdas
+
+A LISBY DEVICE program is identified by the magic prefix consisting of ASCII
+characters "LISBY001". A strictly adhering LISBY DEVICE implementation must also
+demand that the program ends with the magic suffix consisting of ASCII
+characters "100YBSIL".
+
+The symbol and string tables are encoded as follows:
+* A count of the table entries is first given as a 64-bit LE integer
+* All table entries are given as (length, name) pairs
+	* The length is a 64-bit LE integer describing how many octets the name
+	  consists of
+	* The value is UTF-8 encoded
+		* Apparently the LISBY DEVICE was also a time machine!
+* Table entry order matters
+* Table entries are indexed from zero
+
+The tapes are encoded as follows:
+* A count of the tapes is first given as a 64-bit LE integer
+* All tapes are then given in order
+* All tapes are encoded as (length, data) pairs
+    * The length is a 64-bit LE integer describing ohw many octets the tape
+      consists of
+* The tapes contain op codes (see below) and possible op code data
+* All op codes are one octet in length
+* If an op code contains subsequent data, the subsequent data is always 8 octets
+* Tapes are indexed from zero
+
+A LISBY DEVICE is suggested to evaluate code by using A PROGRAM COUNTER, which
+is a pair formed by the active tape and its tape offset. Tape #0 is the
+top-level tape. Program execution begins from tape #0. The tape offset indicates
+the current instruction to execute in the presently active tape. All tape
+executions should begin from offset #0.
+
+There is a CURRENTLY ACTIVE TAPE, which is changed by the CALL and RET
+instructions. When a CALL is made, a fresh ENVIRONMENT is created. When RET is
+executed, the control moves back to the previous CALL site, and the old
+environment is activated.
+
+A LISBY DEVICE should define a concept of nested ENVIRONMENTS. A single
+environment defines a set of symbol bindings and their associated values.
+The DECLARE op defined below may be used to introduce a binding defined by
+its symbol index into the currently active environment. Once a symbol has been
+defined, STORE may be used to place a value there. Each environment, except the
+top-level environment, has a parent environment. NEWENV and DEPARTENV are used
+to activate fresh or parent environments, respectively.
+
+A LISBY DEVICE is suggested to use two stacks:
+* VALUE STACK: For pushing and popping values
+* CALL STACK: For pushing and popping return addresses for calling
+  program-defined lambdas
+
+In program code, all LISBY SYMBOLS are referred to with their SYMBOL INDEX.
+Similarly, all LISBY STRINGS are referred to with their STRING INDEX.
+
+As mentioned earlier, some of the op codes include 8 octets of data right after
+them. These opcodes are: PUSHI, PUSHF, PUSHSTR, PUSHSY, STORE, STORETOP,
+PUSHCLOSURE, JT, JF, JMP, DECLARE, LIST, PUSHSYRAW, QUOTED, PUSHCONT.
+
+The op codes are:
+
+    HALT = 0  # ceases execution of the program
+
+    ADD = 1  # binary arithmetic; pop two values from value stack;
+    SUB = 2  # and then push the result back; should only work
+    MUL = 3  # with integers and floats
+    DIV = 4
+    XOR = 5  # integer xor
+    MOD = 6  # integer and float modulo
+
+    AND = 7  # conditionals; pop two values from value stack;
+    OR = 8   # push the result back; AND and OR should both be short-circuiting
+
+    INV = 9  # pop value from stack; do bitwise inversions; works on integers
+
+    PUSHI = 10    # push an integer to the value stack
+    PUSHF = 11    # push a float
+    PUSHSTR = 12  # string table reference follows (int); the respective string
+                  # index is pushed into the value stack stack
+    PUSHSY = 13   # symbol table reference follows (int); the respective symbol
+                  # value within the currently active environment is pushed
+                  # into the value stack; this PUSH should not
+                  # be preceded by QUOTED.
+
+    PUSHSYRAW = 14  # symbol table reference follows (int); the respective
+                    # symbol index is pushed into the value stack
+    PUSHTRUE = 15   # push a boolean true to value stack
+    PUSHFALSE = 16  # push a boolean false to value stack
+    PUSHUNIT = 17   # push unit (empty list) to value stack
+
+    PUSHCLOSURE = 18  # pushes a closure reference to the stack; the reference
+                      # means a tape identifier; the closure closes over the
+                      # present environment, which becomes its parent
+                      # environment
+
+    PUSHCONT = 19  # pushes the current continuation to stack; the continuation
+                   # captures the current state of computation completely
+
+    QUOTED = 20    # increases quoting level of next value push
+    POP = 21       # pops a value from the stack without storing it
+    CALL = 22      # pops a closure from value stack; transfers control there;
+                   # a fresh environment is activated with the closure
+                   # environment as its parent
+    TAILCALL = 23  # like call except tail call
+    RET = 24       # pops a return address from call stack; transfers control
+                   # there; the call site's environment is activated
+
+    JT = 25   # pops a boolean from value stack, jumps to tape offset if true
+    JF = 26   # pops a boolean from value stack, jumps to tape offset if false
+    JMP = 27  # unconditional jump to tape offset
+
+    STORE = 28     # stores popped stack value to given symbol index of the
+                   # presently active environment; the symbol must be DECLAREd
+                   # in the presently active or any of its parent environments
+    STORETOP = 29  # stores popped stack value to given symbol index of the
+                   # top-level environment; should error if the symbol index
+                   # is not defined in the top-level environment
+
+    EQ = 30    # conditionals: pop two values from value stack, and push
+    NEQ = 31   # a boolean value back depending on the result
+    GT = 32
+    GE = 33
+    LT = 34
+    LE = 35
+    NOT = 36  # pop boolean from value stack; if popped value is TRUE, push back
+              # FALSE and vice versa
+
+    DECLARE = 37  # declares a variable with the given symbol index (int) in the
+                  # presently active environment
+    PRINT = 38    # pops one value and attempts to display it to the controlling
+                  # terminal
+
+    LIST = 39     # constructs a list of N entries popped from value stack
+    HEAD = 40     # pops a list and pushes its first element; should error if
+                  # the list is empty
+    TAIL = 41     # pops a list and pushes it without its first element; should
+                  # error if the list is empty
+    LISTCAT = 42  # pops two lists from value stack; pushes their concatenation
+
+    EVAL = 43  # pops a value, evaluates it in an empty environment
+    DUMP = 44  # dumps the current vm status in an implementation defined manner
+    NEWENV = 45  # activates a fresh environment with the current environment as
+                 # its parent
+    DEPARTENV = 46  # departs the current environment and activates the parent
+                    # environment
