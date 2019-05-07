@@ -20,7 +20,7 @@
 ## Write-up
 
 This is the first part of a five parts challenge on forensics, where it is needed to recover information from a memory dump. 
-To analyse the memory dump, we use the Python tool `Volatility Framework`.
+To analyse the memory dump, we use the Python tool `Volatility Framework` and its many commands [@volatility_commands].
 
 The first step is to find what type of operating system was the memory capture was done on, which we can find with the command `imageinfo`.
 

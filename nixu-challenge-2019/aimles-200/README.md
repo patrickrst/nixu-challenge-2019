@@ -26,7 +26,7 @@ Therefore, we decide to look at the network capture which consists of SSH traffi
 Looking around in the packets, we can see that the shell session is not encrypted.
 We use `strings` on the pcap file to extract the readable text, which gives us some commands that were run on the server and a email about the security audit, which contains 4 hints.
 The fourth hint in the email confirms our doubt that there is no encryption cipher offered by the SSH server.
-We need to compile the openssh client with a small modification to allow us to connect to the SSH server using the `none` cipher.
+We need to compile the openssh client with a small modification to allow us to connect to the SSH server using the `none` cipher [@stackoverflow_openssh].
 Once we try to connect, we need to authenticate using a key.
 An other hint from the email tell us that the encryption key used by the two employees to connect to the server may have a weakness.
 After having extracted the public keys from the network capture, we used RsaCtfTool to performs an attack against the two public keys to find a common factor and recover the private keys.

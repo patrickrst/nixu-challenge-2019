@@ -32,6 +32,7 @@ AVKH{flzobyf_naq_ahzoref_ner_sha_gb_cynl_jvgu}
 NIXU{symbols_and_numbers_are_fun_to_play_with}
 ```
 
-## Analysis
+### Analysis
 
 This challenge, which is functioning as an introduction to the Nixu Challenge, don't have many real world applications. The challenge introduce analysis of network traffic using programs like Wireshark and basic encodings but the solutions are straight-forward and don't require much thinking. While it is obviously possible to send information encoded as port numbers it is cumbersome and the erratic behaviour would easily be detected, and most likely blocked, by the most basic network security system.
+

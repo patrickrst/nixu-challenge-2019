@@ -13,7 +13,8 @@ FLAGS = -s \
 		--template template.latex \
 		--listings \
 		--bibliography=bibliography.bib \
-		--csl=bibliography.csl
+		--csl=bibliography.csl \
+		--metadata link-citations
 
 all: chals pdf
 

@@ -11,23 +11,24 @@ some commands that were run on the server and a email about the security
 audit, which contains 4 hints. The fourth hint in the email confirms our
 doubt that there is no encryption cipher offered by the SSH server. We
 need to compile the openssh client with a small modification to allow us
-to connect to the SSH server using the `none` cipher. Once we try to
-connect, we need to authenticate using a key. An other hint from the
-email tell us that the encryption key used by the two employees to
-connect to the server may have a weakness. After having extracted the
-public keys from the network capture, we used RsaCtfTool to performs an
-attack against the two public keys to find a common factor and recover
-the private keys. We are now able to go one step further, but the server
-asks for a time-based one-time password (TOTP). Using the other hints in
-the email, we know the validity of the TOTP is 5 minutes. Also, the user
-ran a command on the file containing the TOTP secret that gives us what
-number appears in the secret and that there is only consonants and
-numbers. The user also ran `ls`, which gives us the length (8 chars) of
-the secret and he ran `md5sum`, which gives us the MD5 hash of the
-secret. Using hashcat and the hints we have about the secret, we brute
-forced the MD5 hash to find the value of the TOTP secret. With the
-secret, we are able to generate a TOTP that is valid for 5 minutes and
-finaly connect to the SSH server to retreive the flag!
+to connect to the SSH server using the `none` cipher
+[@stackoverflow_openssh]. Once we try to connect, we need to
+authenticate using a key. An other hint from the email tell us that the
+encryption key used by the two employees to connect to the server may
+have a weakness. After having extracted the public keys from the network
+capture, we used RsaCtfTool to performs an attack against the two public
+keys to find a common factor and recover the private keys. We are now
+able to go one step further, but the server asks for a time-based
+one-time password (TOTP). Using the other hints in the email, we know
+the validity of the TOTP is 5 minutes. Also, the user ran a command on
+the file containing the TOTP secret that gives us what number appears in
+the secret and that there is only consonants and numbers. The user also
+ran `ls`, which gives us the length (8 chars) of the secret and he ran
+`md5sum`, which gives us the MD5 hash of the secret. Using hashcat and
+the hints we have about the secret, we brute forced the MD5 hash to find
+the value of the TOTP secret. With the secret, we are able to generate a
+TOTP that is valid for 5 minutes and finaly connect to the SSH server to
+retreive the flag!
 
 L'aritmetico, Il geometrico, Il finito
 --------------------------------------
@@ -37,7 +38,8 @@ Bad memories - part 1
 
 This is the first part of a five parts challenge on forensics, where it
 is needed to recover information from a memory dump. To analyse the
-memory dump, we use the Python tool `Volatility Framework`.
+memory dump, we use the Python tool `Volatility Framework` and its many
+commands [@volatility_commands].
 
 The first step is to find what type of operating system was the memory
 capture was done on, which we can find with the command `imageinfo`.
@@ -230,6 +232,22 @@ python -c 'print("2\n" + "name\n" + "A"*128+"1234567\x81\n" + "3\n1\n" + "name\n
 
     NIXU{h0w_t0_d3al_w1th_null_byt3s\x00}
 
+### Analysis
+
+Bugs related to buffer, stack and integer overflows remain common to
+this day. They occur both in small scale software like the one used in
+these challenges and in products developed by software giants like
+Google (reference
+https://arstechnica.com/information-technology/2014/12/gangnam-style-overflows-int\_max-forces-youtube-to-go-64-bit/).
+Overflows have been known since at least 1972 (reference
+https://web.archive.org/web/20110721060319/http://csrc.nist.gov/publications/history/ande72.pdf),
+are among the most well known bugs and are often the first ones new
+programmers learn about. Overflows are often, as reflected in the
+challenge, simple in nature but can have devastating consequences. That
+overflow bugs and exploits are still common despite all this highlights
+the need for security oriented programmers (all programmers should be)
+to be knowledgeable about overflows.
+
 Pad Practice
 ------------
 
@@ -259,6 +277,17 @@ the key.
 
     AVKH{flzobyf_naq_ahzoref_ner_sha_gb_cynl_jvgu}
     NIXU{symbols_and_numbers_are_fun_to_play_with}
+
+### Analysis
+
+This challenge, which is functioning as an introduction to the Nixu
+Challenge, don't have many real world applications. The challenge
+introduce analysis of network traffic using programs like Wireshark and
+basic encodings but the solutions are straight-forward and don't require
+much thinking. While it is obviously possible to send information
+encoded as port numbers it is cumbersome and the erratic behaviour would
+easily be detected, and most likely blocked, by the most basic network
+security system.
 
 Stowaway
 --------

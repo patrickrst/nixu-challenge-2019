@@ -21,5 +21,7 @@ python -c 'print("2\n" + "name\n" + "A"*128+"1234567\x81\n" + "3\n1\n" + "name\n
 NIXU{h0w_t0_d3al_w1th_null_byt3s\x00}
 ```
 
-## Analysis
+### Analysis
+
 Bugs related to buffer, stack and integer overflows remain common to this day. They occur both in small scale software like the one used in these challenges and in products developed by software giants like Google (reference https://arstechnica.com/information-technology/2014/12/gangnam-style-overflows-int_max-forces-youtube-to-go-64-bit/). Overflows have been known since at least 1972 (reference https://web.archive.org/web/20110721060319/http://csrc.nist.gov/publications/history/ande72.pdf), are among the most well known bugs and are often the first ones new programmers learn about. Overflows are often, as reflected in the challenge, simple in nature but can have devastating consequences. That overflow bugs and exploits are still common despite all this highlights the need for security oriented programmers (all programmers should be) to be knowledgeable about overflows.
+
