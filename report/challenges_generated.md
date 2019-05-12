@@ -17,18 +17,19 @@ authenticate using a key. An other hint from the email tell us that the
 encryption key used by the two employees to connect to the server may
 have a weakness. After having extracted the public keys from the network
 capture, we used RsaCtfTool to performs an attack against the two public
-keys to find a common factor and recover the private keys. We are now
-able to go one step further, but the server asks for a time-based
-one-time password (TOTP). Using the other hints in the email, we know
-the validity of the TOTP is 5 minutes. Also, the user ran a command on
-the file containing the TOTP secret that gives us what number appears in
-the secret and that there is only consonants and numbers. The user also
-ran `ls`, which gives us the length (8 chars) of the secret and he ran
-`md5sum`, which gives us the MD5 hash of the secret. Using hashcat and
-the hints we have about the secret, we brute forced the MD5 hash to find
-the value of the TOTP secret. With the secret, we are able to generate a
-TOTP that is valid for 5 minutes and finaly connect to the SSH server to
-retreive the flag!
+keys to find a common factor and recover the private keys [@rsactftool].
+We are now able to go one step further, but the server asks for a
+time-based one-time password (TOTP). Using the other hints in the email,
+we know the validity of the TOTP is 5 minutes. Also, the user ran a
+command on the file containing the TOTP secret that gives us what number
+appears in the secret and that there is only consonants and numbers. The
+user also ran `ls`, which gives us the length (8 chars) of the secret
+and he ran `md5sum`, which gives us the MD5 hash of the secret. Using
+hashcat mask attack and the hints we have about the secret, we brute
+forced the MD5 hash to find the value of the TOTP secret
+[@hashcat_mask]. With the secret, we are able to generate a TOTP that is
+valid for 5 minutes and finaly connect to the SSH server to retreive the
+flag!
 
 L'aritmetico, Il geometrico, Il finito
 --------------------------------------
@@ -75,8 +76,9 @@ In this part of the forensics challenge, we need to look for a lost
 file. To do this we need to search for files present in the main memory
 dump and more importantly files that have been deleted or moved to the
 recycle bin. There are multiple commands available in volatility to
-search for files such as `filescan`, `dumpfiles` and `mftparser`. We had
-success with `mftparser`. Using the following command
+search for files such as `filescan`, `dumpfiles` and `mftparser`
+[@volatility_files]. We had success with `mftparser`. Using the
+following command
 `mftparser --dump-dir=output --output-file=badmem_mft.body --output=body`,
 we get a list of extracted files in `badmem_mft.body` and the extracted
 files in the `output` folder. Knowing we are looking for a lost file, we
@@ -102,10 +104,10 @@ we do a `memdump` of the Paint process and look into that.
 
 We rename the extension from `.dmp` to `.data` to be able to use GIMP to
 view the raw data. Doing this, we are able to move along the process
-memory and search visually for an image. After a lot of trial and error
-and looking at random bits of data, we were able to find a few images
-that made sense, such as the desktop of the user and an image containing
-the flag `NIXU{c4n_you_3nhanc3_this}`.
+memory and search visually for an image [@volatility_paint]. After a lot
+of trial and error and looking at random bits of data, we were able to
+find a few images that made sense, such as the desktop of the user and
+an image containing the flag `NIXU{c4n_you_3nhanc3_this}`.
 
 Bad memories - part 4
 ---------------------
@@ -142,18 +144,19 @@ also many TXT, MX and CNAME queries to a domain name ending with
 
 From there, we can assume that the data in encoded in the numbers in the
 domain name. Looking up on the web, we can find a DNS tunnel named
-dnscat2 that seems to be the one in use. We export the DNS queries from
-Wireshark to a text file, keep only the domain name and strip the
-`malicious.pw` ending. By converting the series of number to ASCII, we
-can find a session in a UNIX shell and a file named `flag.png`, which
-seems to have also been transfered in the same DNS tunnel session.
-Indeed, we can also find the header of a PNG file, starting with
-`89 50 4E 47`. Using a Python script and the library `dpkt`, we parse
-the network capture and keep only the data from the DNS queries that
-contains `PNG` to the end of the image, the packet containing `IEND`. We
-also need to strip a few bytes that are used by the dnscat2 protocol.
-Writing the image bytes to a file results in a valid PNG (after a few
-tries) which contains the flag `NIXU{just_another_tunneling_technique}`.
+dnscat2 that seems to be the one in use [@dnscat2][@dnscat_writeup]. We
+export the DNS queries from Wireshark to a text file, keep only the
+domain name and strip the `malicious.pw` ending. By converting the
+series of number to ASCII, we can find a session in a UNIX shell and a
+file named `flag.png`, which seems to have also been transfered in the
+same DNS tunnel session. Indeed, we can also find the header of a PNG
+file, starting with `89 50 4E 47`. Using a Python script and the library
+`dpkt`, we parse the network capture and keep only the data from the DNS
+queries that contains `PNG` to the end of the image, the packet
+containing `IEND`. We also need to strip a few bytes that are used by
+the dnscat2 protocol. Writing the image bytes to a file results in a
+valid PNG (after a few tries) which contains the flag
+`NIXU{just_another_tunneling_technique}`.
 
 fridge 2.0
 ----------

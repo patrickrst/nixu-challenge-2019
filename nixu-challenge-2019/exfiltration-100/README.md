@@ -22,7 +22,7 @@ Looking at the DNS packets, we can see a lot of legitimate traffic, but also man
 We can filter those queries using this expression `dns && dns.qry.name contains "malicious.pw"` in Wireshark.
 
 From there, we can assume that the data in encoded in the numbers in the domain name.
-Looking up on the web, we can find a DNS tunnel named dnscat2 that seems to be the one in use.
+Looking up on the web, we can find a DNS tunnel named dnscat2 that seems to be the one in use [@dnscat2][@dnscat_writeup].
 We export the DNS queries from Wireshark to a text file, keep only the domain name and strip the `malicious.pw` ending.
 By converting the series of number to ASCII, we can find a session in a UNIX shell and a file named `flag.png`, which seems to have also been transfered in the same DNS tunnel session.
 Indeed, we can also find the header of a PNG file, starting with `89 50 4E 47`.

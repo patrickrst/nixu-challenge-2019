@@ -29,11 +29,11 @@ The fourth hint in the email confirms our doubt that there is no encryption ciph
 We need to compile the openssh client with a small modification to allow us to connect to the SSH server using the `none` cipher [@stackoverflow_openssh].
 Once we try to connect, we need to authenticate using a key.
 An other hint from the email tell us that the encryption key used by the two employees to connect to the server may have a weakness.
-After having extracted the public keys from the network capture, we used RsaCtfTool to performs an attack against the two public keys to find a common factor and recover the private keys.
+After having extracted the public keys from the network capture, we used RsaCtfTool to performs an attack against the two public keys to find a common factor and recover the private keys [@rsactftool].
 We are now able to go one step further, but the server asks for a time-based one-time password (TOTP).
 Using the other hints in the email, we know the validity of the TOTP is 5 minutes.
 Also, the user ran a command on the file containing the TOTP secret that gives us what number appears in the secret and that there is only consonants and numbers.
 The user also ran `ls`, which gives us the length (8 chars) of the secret and he ran `md5sum`, which gives us the MD5 hash of the secret.
-Using hashcat and the hints we have about the secret, we brute forced the MD5 hash to find the value of the TOTP secret.
+Using hashcat mask attack and the hints we have about the secret, we brute forced the MD5 hash to find the value of the TOTP secret [@hashcat_mask].
 With the secret, we are able to generate a TOTP that is valid for 5 minutes and finaly connect to the SSH server to retreive the flag!
 
