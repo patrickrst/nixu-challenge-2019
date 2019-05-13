@@ -130,6 +130,23 @@ from the registry, such as the default password for Windows.
 Indeed, in the default password key we can find the challenge flag
 `NIXU{was_it_even_hard_for_you?}`.
 
+### Analysis
+
+The Bad memories serie of challenges is about forensics and memory dump
+analysis. This is a common category in capture the flag competitions
+where the goal is to extract flags from a main memory dump (the RAM
+content) of an operating system. It also relates to real world
+situations such as data recovery and digital/computer forensics. The
+same skillset applies for both cases, except that for forensics, it is
+not only sufficient to recover the information, but also to find
+evidence with metadata in order to present facts for legal reasons. From
+a memory dump, there is a lot of information that can be retreive like
+running processes, active network connections, files that are being
+edited, usernames, passwords, etc. and also more data from sources such
+as the Windows registry or any databases. Encryption at different levels
+can be a way to hinder the process of memory dump analysis, but this was
+not part of the challenges.
+
 Exfiltration
 ------------
 
@@ -158,8 +175,33 @@ the dnscat2 protocol. Writing the image bytes to a file results in a
 valid PNG (after a few tries) which contains the flag
 `NIXU{just_another_tunneling_technique}`.
 
+### Analysis
+
+Dnscat2 tunnels network traffic over the DNS protocol and is a real
+world application that a security researcher could encouter. DNS tunnels
+are common because it allows to communicate with the outside world as it
+is rare for a firewall to block DNS traffic. An example application is
+for a command-and-control infrastructure that could be used by malware.
+This challenge is a realistic situation that relates to network
+security. To be able to detect such traffic inside a network, we would
+need a performing IDS to detect that this is malicious DNS traffic.
+
 fridge 2.0
 ----------
+
+For this challenge, we get the firmware of an IOT device that is part of
+a Cloud network. We started by reversing the firmware using the tool
+Radare2 and afterwards Ghidra. From the binary, we can see that the
+device connect to an external server to do a JSON request. The URL that
+the device sends a request to is encryption inside the firmware.
+However, the key used by the encryption is also stored in the firmware,
+so we are able to decrypt it using AES to recover the URL. The recovered
+URLs are `https://fridge2_0.thenixuchallenge.com/api/register` and
+`https://fridge2_0.thenixuchallenge.com/api/temp` which are part of the
+API to register a new IOT device and control the temperature of the
+device. However, we have not been able to go farther from there. We have
+tried to find other interesting pages/protocols on the server and also
+tried to exploit and do fuzzing on the API, but with no success.
 
 lisby-1
 -------

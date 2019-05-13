@@ -30,3 +30,7 @@ Using a Python script and the library `dpkt`, we parse the network capture and k
 We also need to strip a few bytes that are used by the dnscat2 protocol.
 Writing the image bytes to a file results in a valid PNG (after a few tries) which contains the flag `NIXU{just_another_tunneling_technique}`.
 
+### Analysis
+
+Dnscat2 tunnels network traffic over the DNS protocol and is a real world application that a security researcher could encouter. DNS tunnels are common because it allows to communicate with the outside world as it is rare for a firewall to block DNS traffic. An example application is for a command-and-control infrastructure that could be used by malware. This challenge is a realistic situation that relates to network security. To be able to detect such traffic inside a network, we would need a performing IDS to detect that this is malicious DNS traffic.
+

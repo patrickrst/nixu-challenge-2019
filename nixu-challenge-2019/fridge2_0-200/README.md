@@ -28,3 +28,12 @@
 
 ## Write-up
 
+For this challenge, we get the firmware of an IOT device that is part of a Cloud network.
+We started by reversing the firmware using the tool Radare2 and afterwards Ghidra.
+From the binary, we can see that the device connect to an external server to do a JSON request.
+The URL that the device sends a request to is encryption inside the firmware.
+However, the key used by the encryption is also stored in the firmware, so we are able to decrypt it using AES to recover the URL.
+The recovered URLs are `https://fridge2_0.thenixuchallenge.com/api/register` and `https://fridge2_0.thenixuchallenge.com/api/temp` which are part of the API to register a new IOT device and control the temperature of the device.
+However, we have not been able to go farther from there.
+We have tried to find other interesting pages/protocols on the server and also tried to exploit and do fuzzing on the API, but with no success.
+

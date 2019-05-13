@@ -32,3 +32,7 @@ volatility -f mem.dmp --profile=Win7SP1x64 lsadump
 
 Indeed, in the default password key we can find the challenge flag `NIXU{was_it_even_hard_for_you?}`.
 
+### Analysis
+
+The Bad memories serie of challenges is about forensics and memory dump analysis. This is a common category in capture the flag competitions where the goal is to extract flags from a main memory dump (the RAM content) of an operating system. It also relates to real world situations such as data recovery and digital/computer forensics. The same skillset applies for both cases, except that for forensics, it is not only sufficient to recover the information, but also to find evidence with metadata in order to present facts for legal reasons. From a memory dump, there is a lot of information that can be retreive like running processes, active network connections, files that are being edited, usernames, passwords, etc. and also more data from sources such as the Windows registry or any databases. Encryption at different levels can be a way to hinder the process of memory dump analysis, but this was not part of the challenges.
+
