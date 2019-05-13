@@ -31,6 +31,20 @@ forced the MD5 hash to find the value of the TOTP secret
 valid for 5 minutes and finaly connect to the SSH server to retreive the
 flag!
 
+### Analysis
+
+This challenge consists of multiple steps that need to be solved in
+order to obtain the flag. This feels more realistic than other CTF
+challenges, as there is multiple skills involved and there is a process
+to go through instead of just solving a specific task. It ressembles
+more to what a pentester job may look like (the challenge description
+refers to a security audit). The challenge requires to have networking
+skills (analyzing a .pcap with Wireshark, understanding the SSH
+protocol) and an understanding of encryption/authentification (how
+OpenSSH works, the flaws in RSA key generation, Time-based one time
+password). Such a challenge demonstrate that a chain of multiple
+exploitable flaws in a system may allow to obtain access to it.
+
 L'aritmetico, Il geometrico, Il finito
 --------------------------------------
 
@@ -219,6 +233,21 @@ wrote a small Python script to read the binary, find the substraction
 instruction and do in operation on the numbers, which allowed us to
 recover the full flag.
 
+### Analysis
+
+A fake computer architecture is describe in this challenge which is used
+to reverse a binary to assembly code in order to understand what the
+program is doing and recover the flag. Reversing engineering is an
+important skill in security and may be used in multiple situations, such
+as malware analysis or to understand how a program/protocol works. While
+the Lisby architecture is fake, the general concepts of reversing a
+binary still apply as there exists a lot of different ISA like x86, ARM,
+MIPS, RISC-V, etc. which each has some differences. On the opposite of
+those architures, the Lisby device is unknown, therefore there is no
+toolchain around it (assembler, compiler, debugger, emulator, etc.) and
+reversing tools such as radare2 does not support it. Either we need to
+do the dissaembly by hand or write some tool to help us.
+
 lisby-2
 -------
 
@@ -239,6 +268,19 @@ In the source code of the webpage, we can see a reference to LDAP
 injection. Using the following query `*))(|(a=*`, we are able to have
 access to secret files which one contains the flag
 `NIXU{c00kies_with_ldap_for_p0r1ft}`.
+
+### Analysis
+
+This is a web challenge that has a simple flaw in how the
+authentification is done and that is not really seen on actual website.
+However, there is many different categories of flaws on web application,
+so it is not surprising to find some sort of vulnerabilities on a
+website. The second part of the challenge is a LDAP injection, similar
+to a SQL injection, which has been and is still a very common flaw in
+web servers and how database queries are handled. While this challenge
+may have been easier, web flaws are very common and it is important to
+learn about them to be able to correctly secure a web server and
+website.
 
 Device Control Pwnel
 --------------------

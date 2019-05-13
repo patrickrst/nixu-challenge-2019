@@ -38,3 +38,7 @@ Soon enough, we can understand what the program does and find a pattern in the i
 The program push two numbers to the stack and substract them, which gives an ASCII char and by doing a few of the substrations manually, we can see the string as the format of the flag (NIXU...).
 We wrote a small Python script to read the binary, find the substraction instruction and do in operation on the numbers, which allowed us to recover the full flag.
 
+### Analysis
+
+A fake computer architecture is describe in this challenge which is used to reverse a binary to assembly code in order to understand what the program is doing and recover the flag. Reversing engineering is an important skill in security and may be used in multiple situations, such as malware analysis or to understand how a program/protocol works. While the Lisby architecture is fake, the general concepts of reversing a binary still apply as there exists a lot of different ISA like x86, ARM, MIPS, RISC-V, etc. which each has some differences. On the opposite of those architures, the Lisby device is unknown, therefore there is no toolchain around it (assembler, compiler, debugger, emulator, etc.) and reversing tools such as radare2 does not support it. Either we need to do the dissaembly by hand or write some tool to help us.
+

@@ -20,3 +20,7 @@ We change the value of `logged_in` to `true`, encode it and update the cookie. W
 In the source code of the webpage, we can see a reference to LDAP (`<!-- Get documents from ldap! -->`), which hints us at a LDAP injection.
 Using the following query `*))(|(a=*`, we are able to have access to secret files which one contains the flag `NIXU{c00kies_with_ldap_for_p0r1ft}`.
 
+### Analysis
+
+This is a web challenge that has a simple flaw in how the authentification is done and that is not really seen on actual website. However, there is many different categories of flaws on web application, so it is not surprising to find some sort of vulnerabilities on a website. The second part of the challenge is a LDAP injection, similar to a SQL injection, which has been and is still a very common flaw in web servers and how database queries are handled. While this challenge may have been easier, web flaws are very common and it is important to learn about them to be able to correctly secure a web server and website.
+

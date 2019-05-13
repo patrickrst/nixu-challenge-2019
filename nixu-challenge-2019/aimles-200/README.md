@@ -37,3 +37,7 @@ The user also ran `ls`, which gives us the length (8 chars) of the secret and he
 Using hashcat mask attack and the hints we have about the secret, we brute forced the MD5 hash to find the value of the TOTP secret [@hashcat_mask].
 With the secret, we are able to generate a TOTP that is valid for 5 minutes and finaly connect to the SSH server to retreive the flag!
 
+### Analysis
+
+This challenge consists of multiple steps that need to be solved in order to obtain the flag. This feels more realistic than other CTF challenges, as there is multiple skills involved and there is a process to go through instead of just solving a specific task. It ressembles more to what a pentester job may look like (the challenge description refers to a security audit). The challenge requires to have networking skills (analyzing a .pcap with Wireshark, understanding the SSH protocol) and an understanding of encryption/authentification (how OpenSSH works, the flaws in RSA key generation, Time-based one time password). Such a challenge demonstrate that a chain of multiple exploitable flaws in a system may allow to obtain access to it.
+
