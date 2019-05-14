@@ -45,9 +45,6 @@ OpenSSH works, the flaws in RSA key generation, Time-based one time
 password). Such a challenge demonstrate that a chain of multiple
 exploitable flaws in a system may allow to obtain access to it.
 
-L'aritmetico, Il geometrico, Il finito
---------------------------------------
-
 Bad memories - part 1
 ---------------------
 
@@ -123,9 +120,6 @@ of trial and error and looking at random bits of data, we were able to
 find a few images that made sense, such as the desktop of the user and
 an image containing the flag `NIXU{c4n_you_3nhanc3_this}`.
 
-Bad memories - part 4
----------------------
-
 Bad memories - part 5
 ---------------------
 
@@ -157,7 +151,12 @@ evidence with metadata in order to present facts for legal reasons. From
 a memory dump, there is a lot of information that can be retreive like
 running processes, active network connections, files that are being
 edited, usernames, passwords, etc. and also more data from sources such
-as the Windows registry or any databases. Encryption at different levels
+as the Windows registry or any databases. The skillset is also important
+in the field of computer security where memory analysis, for example,
+might be necessary to understand the nature of an more advanced attack
+where the attacker try to hide their trail, somewhat similarly to the
+challenge where the memory dump was taken just before the computer
+crashed under mysterious circumstances. Encryption at different levels
 can be a way to hinder the process of memory dump analysis, but this was
 not part of the challenges.
 
@@ -203,7 +202,7 @@ need a performing IDS to detect that this is malicious DNS traffic.
 fridge 2.0
 ----------
 
-For this challenge, we get the firmware of an IOT device that is part of
+For this challenge, we get the firmware of an IoT-device that is part of
 a Cloud network. We started by reversing the firmware using the tool
 Radare2 and afterwards Ghidra. From the binary, we can see that the
 device connect to an external server to do a JSON request. The URL that
@@ -216,6 +215,25 @@ API to register a new IOT device and control the temperature of the
 device. However, we have not been able to go farther from there. We have
 tried to find other interesting pages/protocols on the server and also
 tried to exploit and do fuzzing on the API, but with no success.
+
+### Analysis
+
+As this challenge is about insecure IoT-devices it might be the
+challenge with most real world relevance of them all. According to
+experts there will be 75 billion IoT devices in the world by 2025
+[@iotforall] and IoT-devices have a history of lacking security. By
+comparison the device in this challenge is reasonably secure. Its real
+life counterparts often operate with well known default login
+credentials that are the same for all devices and just like the device
+in the challenge they are often delivered with insecure firmware that is
+seldom patched. A good example of the destructive potential of insecure
+IoT-devices is the Mirai botnet, consisting of only IoT-devices, which
+in late autumn 2016 was used to launch a massive DDoS attack against an
+company responsible for parts of the Domain Name System. The attack
+lasted for more than a day, reached traffic levels of more than a
+terabit per second against the targets and brought down numerous major
+websites and services, including major websites like Twitter, the
+Guardian and CNN [@guardian_ddos].
 
 lisby-1
 -------
@@ -247,12 +265,6 @@ those architures, the Lisby device is unknown, therefore there is no
 toolchain around it (assembler, compiler, debugger, emulator, etc.) and
 reversing tools such as radare2 does not support it. Either we need to
 do the dissaembly by hand or write some tool to help us.
-
-lisby-2
--------
-
-lisby-3
--------
 
 ACME Order DB
 -------------
@@ -332,12 +344,6 @@ consequences. That overflow bugs and exploits are still common despite
 all this highlights the need for security oriented programmers (all
 programmers should be) to be knowledgeable about overflows.
 
-Pad Practice
-------------
-
-Plumbing
---------
-
 Ports
 -----
 
@@ -353,7 +359,8 @@ We then tried to translate the decimal numbers to ASCII. The result
 looked like a typical base64 string, a good sign that we're on the right
 track.
 
-    QVZLSHtmbHpvYnlmX25hcV9haHpvcmVmX25lcl9zaGFfZ2JfY3lubF9qdmd1fQ==
+    QVZLSHtmbHpvYnlmX25hcV9haHpvcmVmX25lcl9zaGFfZ2Jf
+    Y3lubF9qdmd1fQ==
 
 The formating of the decoded base64 string assured us that we're almost
 done. Using ROT13, a version of the classic Caesar cipher, we recovered
@@ -372,6 +379,3 @@ much thinking. While it is obviously possible to send information
 encoded as port numbers it is cumbersome and the erratic behaviour would
 easily be detected, and most likely blocked, by the most basic network
 security system.
-
-Stowaway
---------

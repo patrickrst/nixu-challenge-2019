@@ -19,6 +19,9 @@
 \usepackage{setspace}
 \usepackage{fancyvrb}
 
+\setlength{\parindent}{4em}
+\setlength{\parskip}{0.9em}
+
 \usepackage{xcolor}
 \usepackage{listings}
 \newcommand{\passthrough}[1]{#1}

@@ -1,4 +1,4 @@
-﻿## fridge 2.0
+## fridge 2.0
 
 **Categories:** 2019, reversing, web
 **Points:** 200
@@ -38,4 +38,6 @@ However, we have not been able to go farther from there.
 We have tried to find other interesting pages/protocols on the server and also tried to exploit and do fuzzing on the API, but with no success.
 
 ### Analysis
+
 As this challenge is about insecure IoT-devices it might be the challenge with most real world relevance of them all. According to experts there will be 75 billion IoT devices in the world by 2025 [@iotforall] and IoT-devices have a history of lacking security. By comparison the device in this challenge is reasonably secure. Its real life counterparts often operate with well known default login credentials that are the same for all devices and just like the device in the challenge they are often delivered with insecure firmware that is seldom patched. A good example of the destructive potential of insecure IoT-devices is the Mirai botnet, consisting of only IoT-devices, which in late autumn 2016 was used to launch a massive DDoS attack against an company responsible for parts of the Domain Name System. The attack lasted for more than a day, reached traffic levels of more than a terabit per second against the targets and brought down numerous major websites and services, including major websites like Twitter, the Guardian and CNN [@guardian_ddos].
+

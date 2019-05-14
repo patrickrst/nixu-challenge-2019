@@ -1,4 +1,4 @@
-﻿## Bad memories - part 5
+## Bad memories - part 5
 
 **Categories:** forensics, 2019
 **Points:** 50
