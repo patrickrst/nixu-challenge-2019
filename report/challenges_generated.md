@@ -10,7 +10,7 @@ packets, we can see that the shell session is not encrypted. We use
 some commands that were run on the server and an email about the
 security audit, which contains 4 hints. The fourth hint in the email
 confirms our doubt that there is no encryption cipher offered by the SSH
-server. We need to compile the openssh client with a small modification
+server. We need to compile the OpenSSH client with a small modification
 to allow us to connect to the SSH server using the `none` cipher
 [@stackoverflow_openssh]. Once we try to connect, we need to
 authenticate using a key. Another hint from the email tells us that the
@@ -25,7 +25,7 @@ command on the file containing the TOTP secret that gives us what number
 appears in the secret and that there is only consonants and numbers. The
 user also ran `ls`, which gives us the length (8 chars) of the secret
 and he ran `md5sum`, which gives us the MD5 hash of the secret. Using
-hashcat mask attack and the hints we have about the secret, we brute
+Hashcat mask attack and the hints we have about the secret, we brute
 forced the MD5 hash to find the value of the TOTP secret
 [@hashcat_mask]. With the secret, we are able to generate a TOTP that is
 valid for 5 minutes and finally connect to the SSH server to retrieve
@@ -35,15 +35,15 @@ the flag!
 
 This challenge consists of multiple steps that need to be solved in
 order to obtain the flag. This feels more realistic than other CTF
-challenges, as there is multiple skills involved and there is a process
+challenges, as there are multiple skills involved and there is a process
 to go through instead of just solving a specific task. It resembles more
-to what a pentester job may look like (the challenge description refers
-to a security audit). The challenge requires to have networking skills
-(analyzing a .pcap with Wireshark, understanding the SSH protocol) and
-an understanding of encryption/authentification (how OpenSSH works, the
-flaws in RSA key generation, Time-based one time password). Such a
-challenge demonstrates that a chain of multiple exploitable flaws in a
-system may allow to obtain access to it.
+to what a penentration tester job may look like (the challenge
+description refers to a security audit). The challenge requires to have
+networking skills (analyzing a .pcap with Wireshark, understanding the
+SSH protocol) and an understanding of encryption/authentification (how
+OpenSSH works, the flaws in RSA key generation, Time-based one time
+password). Such a challenge demonstrates that a chain of multiple
+exploitable flaws in a system may allow to obtain access to it.
 
 Bad memories - part 1
 ---------------------
@@ -155,11 +155,11 @@ edited, usernames, passwords, etc. and also more data from sources such
 as the Windows registry or any databases. The skill set is also
 important in the field of computer security where memory analysis, for
 example, might be necessary to understand the nature of a more advanced
-attack where the attacker try to hide their trail, somewhat similarly to
-the challenge where the memory dump was taken just before the computer
-crashed under mysterious circumstances. Encryption at different levels
-can be a way to hinder the process of memory dump analysis, but this was
-not part of the challenges.
+attack where the attacker tries to hide their trail, somewhat similarly
+to the challenge where the memory dump was taken just before the
+computer crashed under mysterious circumstances. Encryption at different
+levels can be a way to hinder the process of memory dump analysis, but
+this was not part of the challenges.
 
 Exfiltration
 ------------
@@ -247,7 +247,7 @@ opcodes. We started by dividing the bytes manually into the appropriate
 sections and translating progressively the instructions. Soon enough, we
 can understand what the program does and find a pattern in the
 instructions. The program push two numbers to the stack and subtract
-them, which gives an ASCII char and by doing a few of the substrations
+them, which gives an ASCII char and by doing a few of the subtractions
 manually, we can see the string as the format of the flag (NIXU...). We
 wrote a small Python script to read the binary, find the subtraction
 instruction and do in operation on the numbers, which allowed us to
