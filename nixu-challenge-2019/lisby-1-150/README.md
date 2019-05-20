@@ -35,7 +35,7 @@ This is the first challenge in a series of three challenges based on reversing p
 We are given a manual of how the architecture works and what are the instructions and opcodes.
 We started by dividing the bytes manually into the appropriate sections and translating progressively the instructions.
 Soon enough, we can understand what the program does and find a pattern in the instructions.
-The program push two numbers to the stack and subtract them, which gives an ASCII char and by doing a few of the substrations manually, we can see the string as the format of the flag (NIXU...).
+The program push two numbers to the stack and subtract them, which gives an ASCII char and by doing a few of the subtractions manually, we can see the string as the format of the flag (NIXU...).
 We wrote a small Python script to read the binary, find the subtraction instruction and do in operation on the numbers, which allowed us to recover the full flag.
 
 ### Analysis
