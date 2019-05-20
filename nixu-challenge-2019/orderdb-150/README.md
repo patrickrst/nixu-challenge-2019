@@ -22,5 +22,5 @@ Using the following query `*))(|(a=*`, we are able to have access to secret file
 
 ### Analysis
 
-This is a web challenge that has a simple flaw in how the authentification is done and that is not really seen on actual website. However, there is many different categories of flaws on web application, so it is not surprising to find some sort of vulnerabilities on a website. The second part of the challenge is a LDAP injection, similar to a SQL injection, which has been and is still a very common flaw in web servers and how database queries are handled. While this challenge may have been easier, web flaws are very common and it is important to learn about them to be able to correctly secure a web server and website.
+This is a web challenge that has a simple flaw in how the authentification is done and that is not really seen on any actual website. However, there are many different categories of flaws on web applications, so it is not surprising to find some sort of vulnerabilities on a website. The second part of the challenge is a LDAP injection, similar to a SQL injection, which has been and is still a very common flaw in web servers and how database queries are handled. While this challenge may have been easier, web flaws are very common and it is important to learn about them to be able to correctly secure a web server and website.
 

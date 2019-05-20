@@ -26,7 +26,7 @@ QVZLSHtmbHpvYnlmX25hcV9haHpvcmVmX25lcl9zaGFfZ2Jf
 Y3lubF9qdmd1fQ==
 ```
 
-The formating of the decoded base64 string assured us that we're almost done. Using ROT13, a version of the classic Caesar cipher, we recovered the key.
+The format of the decoded base64 string assured us that we're almost done. Using ROT13, a version of the classic Caesar cipher, we recovered the key.
 
 ```
 AVKH{flzobyf_naq_ahzoref_ner_sha_gb_cynl_jvgu}
@@ -35,5 +35,5 @@ NIXU{symbols_and_numbers_are_fun_to_play_with}
 
 ### Analysis
 
-This challenge, which is functioning as an introduction to the Nixu Challenge, don't have many real world applications. The challenge introduce analysis of network traffic using programs like Wireshark and basic encodings but the solutions are straight-forward and don't require much thinking. While it is obviously possible to send information encoded as port numbers it is cumbersome and the erratic behaviour would easily be detected, and most likely blocked, by the most basic network security system.
+This challenge, which is functioning as an introduction to the Nixu Challenge, don't have many real-world applications. The challenge introduce analysis of network traffic using programs like Wireshark and basic encodings but the solutions are straightforward and don't require much thinking. While it is obviously possible to send information encoded as port numbers, it is cumbersome and the erratic behaviour would easily be detected, and most likely blocked, by the most basic network security system.
 

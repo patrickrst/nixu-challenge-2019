@@ -7,16 +7,16 @@ error about no matching ciphers. Therefore, we decide to look at the
 network capture which consists of SSH traffic. Looking around in the
 packets, we can see that the shell session is not encrypted. We use
 `strings` on the pcap file to extract the readable text, which gives us
-some commands that were run on the server and a email about the security
-audit, which contains 4 hints. The fourth hint in the email confirms our
-doubt that there is no encryption cipher offered by the SSH server. We
-need to compile the openssh client with a small modification to allow us
-to connect to the SSH server using the `none` cipher
+some commands that were run on the server and an email about the
+security audit, which contains 4 hints. The fourth hint in the email
+confirms our doubt that there is no encryption cipher offered by the SSH
+server. We need to compile the openssh client with a small modification
+to allow us to connect to the SSH server using the `none` cipher
 [@stackoverflow_openssh]. Once we try to connect, we need to
-authenticate using a key. An other hint from the email tell us that the
+authenticate using a key. Another hint from the email tells us that the
 encryption key used by the two employees to connect to the server may
 have a weakness. After having extracted the public keys from the network
-capture, we used RsaCtfTool to performs an attack against the two public
+capture, we used RsaCtfTool to perform an attack against the two public
 keys to find a common factor and recover the private keys [@rsactftool].
 We are now able to go one step further, but the server asks for a
 time-based one-time password (TOTP). Using the other hints in the email,
@@ -28,46 +28,47 @@ and he ran `md5sum`, which gives us the MD5 hash of the secret. Using
 hashcat mask attack and the hints we have about the secret, we brute
 forced the MD5 hash to find the value of the TOTP secret
 [@hashcat_mask]. With the secret, we are able to generate a TOTP that is
-valid for 5 minutes and finaly connect to the SSH server to retreive the
-flag!
+valid for 5 minutes and finally connect to the SSH server to retrieve
+the flag!
 
 ### Analysis
 
 This challenge consists of multiple steps that need to be solved in
 order to obtain the flag. This feels more realistic than other CTF
 challenges, as there is multiple skills involved and there is a process
-to go through instead of just solving a specific task. It ressembles
-more to what a pentester job may look like (the challenge description
-refers to a security audit). The challenge requires to have networking
-skills (analyzing a .pcap with Wireshark, understanding the SSH
-protocol) and an understanding of encryption/authentification (how
-OpenSSH works, the flaws in RSA key generation, Time-based one time
-password). Such a challenge demonstrate that a chain of multiple
-exploitable flaws in a system may allow to obtain access to it.
+to go through instead of just solving a specific task. It resembles more
+to what a pentester job may look like (the challenge description refers
+to a security audit). The challenge requires to have networking skills
+(analyzing a .pcap with Wireshark, understanding the SSH protocol) and
+an understanding of encryption/authentification (how OpenSSH works, the
+flaws in RSA key generation, Time-based one time password). Such a
+challenge demonstrates that a chain of multiple exploitable flaws in a
+system may allow to obtain access to it.
 
 Bad memories - part 1
 ---------------------
 
 This is the first part of a five parts challenge on forensics, where it
-is needed to recover information from a memory dump. To analyse the
+is needed to recover information from a memory dump. To analyze the
 memory dump, we use the Python tool `Volatility Framework` and its many
 commands [@volatility_commands].
 
-The first step is to find what type of operating system was the memory
-capture was done on, which we can find with the command `imageinfo`.
+The first step is to find out what type of operating system was the
+memory capture was done on, which we can find with the command
+`imageinfo`.
 
     volatility -f mem.dmp imageinfo
 
 We find that the memory dump is from a Windows 7 operating system. From
-there, we can list the processes that were active during the captutre
+there, we can list the processes that were active during the capture
 with either `pslist` or `pstree`.
 
     volatility -f mem.dmp --profile=Win7SP1x64 pslist
 
-The first part tells to recover the user documentation, which would
-hints at a text editor. There is a `notepad.exe` process running with
-PID 700, so we dump the VADs (Virtual Address Descriptors) and look at
-the VAD tree to find memory regions of heap (in yellow).
+The first part says to recover the user documentation, which would hint
+at a text editor. There is a `notepad.exe` process running with PID 700,
+so we dump the VADs (Virtual Address Descriptors) and look at the VAD
+tree to find memory regions of the heap (in yellow).
 
     volatility -f mem.dmp --profile=Win7SP1x64 vaddump -p 700 -D ./vads/
     volatility -f mem.dmp --profile=Win7SP1x64 vadtree --output=dot --output-file=./vads/graph.dot -p 700
@@ -76,7 +77,7 @@ To do that, we can use `strings` to find text in the heap memory.
 
     strings -e l vads/notepad.exe.8c45060.0x0000000000390000-0x000000000048ffff.dmp 
 
-After looking throught a few files, we can find the flag in ROT13
+After looking through a few files, we can find the flag in ROT13
 `AVKH{guvf_j4f_gu3_rnfl_bar}`, which results in a valid flag
 `NIXU{this_w4s_th3_easy_one}`.
 
@@ -95,17 +96,17 @@ we get a list of extracted files in `badmem_mft.body` and the extracted
 files in the `output` folder. Knowing we are looking for a lost file, we
 search for the recycle bin like
 this`cat badmem_mft.body | grep -i "recycle"` which gives us about 10
-results. We try after to display the files in the output and we finaly
+results. We try after to display the files in the output and we finally
 find one that is interesting (`cat output/file.0x286f8400.data0.dmp`).
 This content is Base64 encoded which once converted becomes a string of
-0 and 1 that can be convert to a ASCII string that is the flag.
+0 and 1 that can be converted to an ASCII string that is the flag.
 
 Bad memories - part 3
 ---------------------
 
 This time, the information that needs to be recovered from the memory
-dump is the "new design" that the user was working on. This hints us to
-search for a graphic image. Using `pslist`, we can confirm that a
+dump is the "new design" that the user was working on. These hints tell
+us to search for a graphic image. Using `pslist`, we can confirm that a
 `mspaint` program was running on the machine. Using `cmdscan` and
 `console`, we can see there exist a `flag.bmp` file in the system of the
 user, but we were unable to extract it from the memory dump. Therefore,
@@ -140,22 +141,22 @@ Indeed, in the default password key we can find the challenge flag
 
 ### Analysis
 
-The Bad memories serie of challenges is about forensics and memory dump
+The Bad memories series of challenges is about forensics and memory dump
 analysis. This is a common category in capture the flag competitions
 where the goal is to extract flags from a main memory dump (the RAM
-content) of an operating system. It also relates to real world
+content) of an operating system. It also relates to real-world
 situations such as data recovery and digital/computer forensics. The
-same skillset applies for both cases, except that for forensics, it is
+same skill set applies for both cases, except that for forensics, it is
 not only sufficient to recover the information, but also to find
 evidence with metadata in order to present facts for legal reasons. From
-a memory dump, there is a lot of information that can be retreive like
+a memory dump, there is a lot of information that can be retrieved like
 running processes, active network connections, files that are being
 edited, usernames, passwords, etc. and also more data from sources such
-as the Windows registry or any databases. The skillset is also important
-in the field of computer security where memory analysis, for example,
-might be necessary to understand the nature of an more advanced attack
-where the attacker try to hide their trail, somewhat similarly to the
-challenge where the memory dump was taken just before the computer
+as the Windows registry or any databases. The skill set is also
+important in the field of computer security where memory analysis, for
+example, might be necessary to understand the nature of a more advanced
+attack where the attacker try to hide their trail, somewhat similarly to
+the challenge where the memory dump was taken just before the computer
 crashed under mysterious circumstances. Encryption at different levels
 can be a way to hinder the process of memory dump analysis, but this was
 not part of the challenges.
@@ -168,7 +169,7 @@ traffic. From the hint in the description (using internet would be
 annoying if this protocol did not exist), we can assume it is about DNS
 (would be annoying to use an IP address instead of a domain name).
 Looking at the DNS packets, we can see a lot of legitimate traffic, but
-also many TXT, MX and CNAME queries to a domain name ending with
+also many TXT, MX and CNAME query to a domain name ending with
 `malicious.pw`. We can filter those queries using this expression
 `dns && dns.qry.name contains "malicious.pw"` in Wireshark.
 
@@ -177,8 +178,8 @@ domain name. Looking up on the web, we can find a DNS tunnel named
 dnscat2 that seems to be the one in use [@dnscat2][@dnscat_writeup]. We
 export the DNS queries from Wireshark to a text file, keep only the
 domain name and strip the `malicious.pw` ending. By converting the
-series of number to ASCII, we can find a session in a UNIX shell and a
-file named `flag.png`, which seems to have also been transfered in the
+series of numbers to ASCII, we can find a session in a UNIX shell and a
+file named `flag.png`, which seems to have also been transferred in the
 same DNS tunnel session. Indeed, we can also find the header of a PNG
 file, starting with `89 50 4E 47`. Using a Python script and the library
 `dpkt`, we parse the network capture and keep only the data from the DNS
@@ -191,13 +192,14 @@ valid PNG (after a few tries) which contains the flag
 ### Analysis
 
 Dnscat2 tunnels network traffic over the DNS protocol and is a real
-world application that a security researcher could encouter. DNS tunnels
-are common because it allows to communicate with the outside world as it
-is rare for a firewall to block DNS traffic. An example application is
-for a command-and-control infrastructure that could be used by malware.
-This challenge is a realistic situation that relates to network
-security. To be able to detect such traffic inside a network, we would
-need a performing IDS to detect that this is malicious DNS traffic.
+world application that a security researcher could encounter. DNS
+tunnels are common because it allows to communicate with the outside
+world as it is rare for a firewall to block DNS traffic. An example
+application is for a command-and-control infrastructure that could be
+used by malware. This challenge is a realistic situation that relates to
+network security. To be able to detect such traffic inside a network, we
+would need a performing IDS to detect that this is malicious DNS
+traffic.
 
 fridge 2.0
 ----------
@@ -205,7 +207,7 @@ fridge 2.0
 For this challenge, we get the firmware of an IoT-device that is part of
 a Cloud network. We started by reversing the firmware using the tool
 Radare2 and afterwards Ghidra. From the binary, we can see that the
-device connect to an external server to do a JSON request. The URL that
+device connects to an external server to do a JSON request. The URL that
 the device sends a request to is encryption inside the firmware.
 However, the key used by the encryption is also stored in the firmware,
 so we are able to decrypt it using AES to recover the URL. The recovered
@@ -218,17 +220,17 @@ tried to exploit and do fuzzing on the API, but with no success.
 
 ### Analysis
 
-As this challenge is about insecure IoT-devices it might be the
+As this challenge is about insecure IoT-devices, it might be the
 challenge with most real world relevance of them all. According to
 experts there will be 75 billion IoT devices in the world by 2025
 [@iotforall] and IoT-devices have a history of lacking security. By
 comparison the device in this challenge is reasonably secure. Its real
-life counterparts often operate with well known default login
+life counterparts often operate with well-known default login
 credentials that are the same for all devices and just like the device
 in the challenge they are often delivered with insecure firmware that is
 seldom patched. A good example of the destructive potential of insecure
 IoT-devices is the Mirai botnet, consisting of only IoT-devices, which
-in late autumn 2016 was used to launch a massive DDoS attack against an
+in late autumn 2016 was used to launch a massive DDoS attack against a
 company responsible for parts of the Domain Name System. The attack
 lasted for more than a day, reached traffic levels of more than a
 terabit per second against the targets and brought down numerous major
@@ -238,33 +240,33 @@ Guardian and CNN [@guardian_ddos].
 lisby-1
 -------
 
-This is the first challenge in a serie of three challenges based on
+This is the first challenge in a series of three challenges based on
 reversing programs from an old computer architecture. We are given a
 manual of how the architecture works and what are the instructions and
 opcodes. We started by dividing the bytes manually into the appropriate
 sections and translating progressively the instructions. Soon enough, we
 can understand what the program does and find a pattern in the
-instructions. The program push two numbers to the stack and substract
+instructions. The program push two numbers to the stack and subtract
 them, which gives an ASCII char and by doing a few of the substrations
 manually, we can see the string as the format of the flag (NIXU...). We
-wrote a small Python script to read the binary, find the substraction
+wrote a small Python script to read the binary, find the subtraction
 instruction and do in operation on the numbers, which allowed us to
 recover the full flag.
 
 ### Analysis
 
-A fake computer architecture is describe in this challenge which is used
-to reverse a binary to assembly code in order to understand what the
-program is doing and recover the flag. Reversing engineering is an
+A fake computer architecture is described in this challenge which is
+used to reverse a binary to assembly code in order to understand what
+the program is doing and recover the flag. Reversing engineering is an
 important skill in security and may be used in multiple situations, such
 as malware analysis or to understand how a program/protocol works. While
 the Lisby architecture is fake, the general concepts of reversing a
 binary still apply as there exists a lot of different ISA like x86, ARM,
 MIPS, RISC-V, etc. which each has some differences. On the opposite of
-those architures, the Lisby device is unknown, therefore there is no
+those architectures, the Lisby device is unknown, therefore there is no
 toolchain around it (assembler, compiler, debugger, emulator, etc.) and
 reversing tools such as radare2 does not support it. Either we need to
-do the dissaembly by hand or write some tool to help us.
+do the disassembly by hand or write some tool to help us.
 
 ACME Order DB
 -------------
@@ -284,25 +286,25 @@ access to secret files which one contains the flag
 ### Analysis
 
 This is a web challenge that has a simple flaw in how the
-authentification is done and that is not really seen on actual website.
-However, there is many different categories of flaws on web application,
-so it is not surprising to find some sort of vulnerabilities on a
-website. The second part of the challenge is a LDAP injection, similar
-to a SQL injection, which has been and is still a very common flaw in
-web servers and how database queries are handled. While this challenge
-may have been easier, web flaws are very common and it is important to
-learn about them to be able to correctly secure a web server and
-website.
+authentification is done and that is not really seen on any actual
+website. However, there are many different categories of flaws on web
+applications, so it is not surprising to find some sort of
+vulnerabilities on a website. The second part of the challenge is a LDAP
+injection, similar to a SQL injection, which has been and is still a
+very common flaw in web servers and how database queries are handled.
+While this challenge may have been easier, web flaws are very common and
+it is important to learn about them to be able to correctly secure a web
+server and website.
 
 Device Control Pwnel
 --------------------
 
 There are two buffer overflow vulnerabilities in this challenge which is
-divived in two parts. The first part is a simple buffer overflow, where
+divided in two parts. The first part is a simple buffer overflow, where
 the program uses the secure function `fgets`, but with a value of 127
-for the maximum number of character to read. The characters are stored
+for the maximum number of characters to read. The characters are stored
 in an array of 8 bytes, which allows us to overflow and write the value
-of the local variable `int id` to zero, which gives access the the admin
+of the local variable `int id` to zero, which gives access the admin
 menu and the first flag.
 
 ``` {.python}
@@ -317,7 +319,7 @@ Device Control Pwnel - part 2
 This is the second part of the buffer overflow challenge using the same
 C source code. The idea is similar, 256 bytes of inputs are allowed
 while the description field in the struct is of size 128 bytes. The
-array is copied using the unsecure funtion `strcpy` which allows us to
+array is copied using the unsecured function `strcpy` which allows us to
 write over the field `id` of the device struct. The goal is to write the
 device master ID `0x8100ca33c1ab7daf` to a device to get the flag. The
 only problem is that the number contains a null byte `\x00` which is the
@@ -337,7 +339,7 @@ Bugs related to buffer, stack and integer overflows remain common to
 this day. They occur both in small scale software like the one used in
 these challenges and in products developed by software giants like
 Google [@arstechnica_overflow]. Overflows have been known since at least
-1972 [@ande72], are among the most well known bugs and are often the
+1972 [@ande72], are among the most well-known bugs and are often the
 first ones new programmers learn about. Overflows are often, as
 reflected in the challenge, simple in nature but can have devastating
 consequences. That overflow bugs and exploits are still common despite
@@ -362,7 +364,7 @@ track.
     QVZLSHtmbHpvYnlmX25hcV9haHpvcmVmX25lcl9zaGFfZ2Jf
     Y3lubF9qdmd1fQ==
 
-The formating of the decoded base64 string assured us that we're almost
+The format of the decoded base64 string assured us that we're almost
 done. Using ROT13, a version of the classic Caesar cipher, we recovered
 the key.
 
@@ -372,10 +374,10 @@ the key.
 ### Analysis
 
 This challenge, which is functioning as an introduction to the Nixu
-Challenge, don't have many real world applications. The challenge
+Challenge, don't have many real-world applications. The challenge
 introduce analysis of network traffic using programs like Wireshark and
-basic encodings but the solutions are straight-forward and don't require
+basic encodings but the solutions are straightforward and don't require
 much thinking. While it is obviously possible to send information
-encoded as port numbers it is cumbersome and the erratic behaviour would
-easily be detected, and most likely blocked, by the most basic network
-security system.
+encoded as port numbers, it is cumbersome and the erratic behaviour
+would easily be detected, and most likely blocked, by the most basic
+network security system.

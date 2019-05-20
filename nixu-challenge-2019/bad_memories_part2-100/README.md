@@ -26,6 +26,6 @@ There are multiple commands available in volatility to search for files such as 
 We had success with `mftparser`.
 Using the following command `mftparser --dump-dir=output --output-file=badmem_mft.body --output=body`, we get a list of extracted files in `badmem_mft.body` and the extracted files in the `output` folder.
 Knowing we are looking for a lost file, we search for the recycle bin like this`cat badmem_mft.body | grep -i "recycle"` which gives us about 10 results.
-We try after to display the files in the output and we finaly find one that is interesting (`cat output/file.0x286f8400.data0.dmp`).
-This content is Base64 encoded which once converted becomes a string of 0 and 1 that can be convert to a ASCII string that is the flag.
+We try after to display the files in the output and we finally find one that is interesting (`cat output/file.0x286f8400.data0.dmp`).
+This content is Base64 encoded which once converted becomes a string of 0 and 1 that can be converted to an ASCII string that is the flag.
 

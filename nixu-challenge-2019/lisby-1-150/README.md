@@ -31,14 +31,14 @@
 
 ## Write-up
 
-This is the first challenge in a serie of three challenges based on reversing programs from an old computer architecture.
+This is the first challenge in a series of three challenges based on reversing programs from an old computer architecture.
 We are given a manual of how the architecture works and what are the instructions and opcodes.
 We started by dividing the bytes manually into the appropriate sections and translating progressively the instructions.
 Soon enough, we can understand what the program does and find a pattern in the instructions.
-The program push two numbers to the stack and substract them, which gives an ASCII char and by doing a few of the substrations manually, we can see the string as the format of the flag (NIXU...).
-We wrote a small Python script to read the binary, find the substraction instruction and do in operation on the numbers, which allowed us to recover the full flag.
+The program push two numbers to the stack and subtract them, which gives an ASCII char and by doing a few of the substrations manually, we can see the string as the format of the flag (NIXU...).
+We wrote a small Python script to read the binary, find the subtraction instruction and do in operation on the numbers, which allowed us to recover the full flag.
 
 ### Analysis
 
-A fake computer architecture is describe in this challenge which is used to reverse a binary to assembly code in order to understand what the program is doing and recover the flag. Reversing engineering is an important skill in security and may be used in multiple situations, such as malware analysis or to understand how a program/protocol works. While the Lisby architecture is fake, the general concepts of reversing a binary still apply as there exists a lot of different ISA like x86, ARM, MIPS, RISC-V, etc. which each has some differences. On the opposite of those architures, the Lisby device is unknown, therefore there is no toolchain around it (assembler, compiler, debugger, emulator, etc.) and reversing tools such as radare2 does not support it. Either we need to do the dissaembly by hand or write some tool to help us.
+A fake computer architecture is described in this challenge which is used to reverse a binary to assembly code in order to understand what the program is doing and recover the flag. Reversing engineering is an important skill in security and may be used in multiple situations, such as malware analysis or to understand how a program/protocol works. While the Lisby architecture is fake, the general concepts of reversing a binary still apply as there exists a lot of different ISA like x86, ARM, MIPS, RISC-V, etc. which each has some differences. On the opposite of those architectures, the Lisby device is unknown, therefore there is no toolchain around it (assembler, compiler, debugger, emulator, etc.) and reversing tools such as radare2 does not support it. Either we need to do the disassembly by hand or write some tool to help us.
 

@@ -19,7 +19,7 @@
 ## Write-up
 
 This time, the information that needs to be recovered from the memory dump is the "new design" that the user was working on.
-This hints us to search for a graphic image.
+These hints tell us to search for a graphic image.
 Using `pslist`, we can confirm that a `mspaint` program was running on the machine.
 Using `cmdscan` and `console`, we can see there exist a `flag.bmp` file in the system of the user, but we were unable to extract it from the memory dump.
 Therefore, we do a `memdump` of the Paint process and look into that.
